@@ -1,26 +1,25 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { useNavigate, useParams } from "react-router-dom"
-import { AppContext } from '../context/AppContext'
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { AppContext } from "../context/AppContext";
 
 const Doctors = () => {
-
-  const {speciality} = useParams()
-  const [filterDoc, setFilterDoc] = useState([])
-  const navigate = useNavigate()
-  const {Doctors = []} = useContext(AppContext)
+  const { speciality } = useParams();
+  const [filterDoc, setFilterDoc] = useState([]);
+  const navigate = useNavigate();
+  const { doctors } = useContext(AppContext);
 
   const applyFilter = () => {
     if(speciality){
-      setFilterDoc(Doctors.filter(doc => doc.speciality === speciality))
+      setFilterDoc(doctors.filter((item) => item.speciality === speciality));
     } else{
-      setFilterDoc(Doctors)
+      setFilterDoc(doctors);
     }
   }
-
+    
   useEffect(() => {
-    applyFilter()
-  }, [Doctors, speciality])
-  
+    applyFilter();
+  }, [doctors, speciality]);
+
 
   return (
     <div>
@@ -35,26 +34,31 @@ const Doctors = () => {
           <p>Gastroenterologist</p>
         </div>
         <div className="">
-          {
-            filterDoc?.map((item, index) => (
-            <div onClick={() => navigate(`/appointment/${item._id}`)} key={index} className="border border-blue-200 rounded-xl overflow-hidden cursor-pointer hover:-translate-y-2.5 transition-all duration-500">
-                <img className='bg-blue-50' src={item.image} alt="" />
-                <div className="p-4">
-                    <div className="flex items-center gap-2 text-sm text-center text-green-500">
-                        <p className='w-2 h-2 bg-green-500 rounded-full'></p><p>Available</p>
-                    </div>
-                     <div className="">
-                            <p className='text-gray-900 text-lg font-medium'>{item.name}</p>
-                            <p className='text-gray-600 text-sm'>{item.speciality}</p>
-                    </div>
+          {filterDoc?.map((item, index) => (
+            <div
+              onClick={() => navigate(`/appointment/${item._id}`)}
+              key={index}
+              className="border border-blue-200 rounded-xl overflow-hidden cursor-pointer hover:-translate-y-2.5 transition-all duration-500"
+            >
+              <img className="bg-blue-50" src={item.image} alt="" />
+              <div className="p-4">
+                <div className="flex items-center gap-2 text-sm text-center text-green-500">
+                  <p className="w-2 h-2 bg-green-500 rounded-full"></p>
+                  <p>Available</p>
                 </div>
+                <div className="">
+                  <p className="text-gray-900 text-lg font-medium">
+                    {item.name}
+                  </p>
+                  <p className="text-gray-600 text-sm">{item.speciality}</p>
+                </div>
+              </div>
             </div>
-        ))
-          }
+          ))}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Doctors
+export default Doctors;
