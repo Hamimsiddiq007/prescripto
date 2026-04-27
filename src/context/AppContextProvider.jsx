@@ -4,8 +4,11 @@ import { doctors } from "../assets/assets";
 
 const AppContextProvider = ({ children }) => {
 
+    const currencySymbol = '$';
+
     const value = useMemo(() => ({
-        doctors
+        doctors,
+        currencySymbol
     }), []);
 
     return (
