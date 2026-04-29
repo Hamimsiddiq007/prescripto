@@ -7,7 +7,7 @@ const Login = () => {
   const [password, setPassword] = useState('')
   const [name, setName] = useState('')
 
-  const onSubmitHandler = (e) => {
+  const onSubmitHandler = async (e) => {
     e.preventDefault()
   }
 
